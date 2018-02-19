@@ -1,0 +1,284 @@
+<html>
+<!--    <link rel="stylesheet" href="css.css">-->
+    <style>
+        
+        body {
+            background: radial-gradient(#F1F9FF,#D0E8DE);
+        }
+        #bigDiv{
+            font-family: 'Raleway', sans-serif;
+            flex:auto;
+            display:flex;
+            flex-direction: column;
+            background: background: radial-gradient(#F1F9FF,#D0E8DE);
+			margin-bottom:10px;
+            position:relative;
+            width:96%;
+            height:85%;
+            overflow-y:auto;
+            padding-left: 7.5px;
+            padding-right: 7.5px;
+            padding-top: 3px;
+            padding-bottom: 2.5px;
+            flex-grow: 5px;
+          
+        }
+        .mainDiv{
+            display:flex;
+            flex-direction: column;
+            height:95%;
+            width:100%;
+            margin:5px;
+            margin-top: 10px;
+        }
+        
+        .body{
+            font-size:15px;
+            font-family: 'Raleway', sans-serif;
+            
+        }
+        .id{
+            visibility: hidden;
+        }
+        .title{
+            font-size:22px;
+            font-family: 'Raleway', sans-serif;
+			font-weight: bold;
+			
+        }
+        .userId{
+            visibility: hidden;
+            
+        }
+        .userName{
+            font-size:13px;
+            color:0000DD;
+            margin-bottom: 5px;
+            margin-top: 5px;
+			transition-duration: 0.3s
+        }
+        .post{
+            display:flex;
+			border-radius: 15px;
+            flex-direction: column;
+            flex:auto;
+            background: linear-gradient(#F5F5DC,#E4F4CC);
+            height:auto;
+            flex-shrink: 0;
+            margin-top:2.5px;
+            margin-bottom: 2.5px;
+			padding:15px;
+            padding-bottom: 5px;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.24), 0 11px 30px 0 rgba(0,0,0,0.19);
+        }
+        
+        #morePosts, .buttons{
+            position: none;
+            cursor: pointer;
+            position: right;
+            background-color: #4C7D55;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 8px 16px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 12px;
+            top:40%;
+            left:40%;
+            margin-right: 15px;
+            text-align: center;
+            display: inline-block;
+            font-weight: bold;
+            transition-duration: 0.3s;
+        }
+
+        .search{
+            margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        .buttons{
+            background-color: #5D8E66;
+        }
+        #morePosts:hover, .buttons:hover{
+            background-color: #5D8E66;
+            box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 11px 30px 0 rgba(0,0,0,0.19);
+        }
+        #find{
+            margin-top:10px;
+            width:80px;
+        }
+        .superDiv {
+            display: flex;
+            width: 100%;
+        }
+  .ulo {
+      
+  position: relative;
+  width: 30%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.patong {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 100%;
+  background-color: #D0E8DE;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.ulo:hover .patong {
+  width: 100%;
+  right: 0;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+    </style>
+    
+    <head>
+    <script
+    src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+    <script>
+    var path = "https://jsonplaceholder.typicode.com/posts";
+    var posts = [];
+    $.get("https://jsonplaceholder.typicode.com/posts",function(obj){
+        page = obj.length -1;
+        console.log("page set to obj length: " + page);
+    });
+        
+        
+    $(document).ready(function(){
+        var query = window.location.search.substring(1);
+        init();
+        function init(){
+            $.get(path,function(obj){
+                for(var i = 0 ; i < 10 ; i++)
+                    posts.push(obj[i]);
+                refresh();
+            });
+        }
+        function getUser(id, obj2){
+            $.get("https://jsonplaceholder.typicode.com/users?id="+id, function(obj){
+                obj2.html(obj[0].name);
+            });
+        }
+        function refresh(){
+            $("#bigDiv").empty();
+            for(var i = 0 ; i < posts.length ; i++){
+                addPost(posts[i]);
+            }
+        }
+        function addPost(jason){
+            var newPost = $("<div>");
+            newPost.addClass("post");
+
+            var title = $("<div>");
+            title.addClass("title");
+
+            var body = $("<div>");
+            body.addClass("body");
+
+            var id = $("<div>");
+            id.addClass("id");
+
+            var userId = $("<div>");
+            userId.addClass("userId");
+
+            var userName = $("<div>");
+            userName.addClass("userName");
+
+
+
+
+            title.html(jason.title);
+            body.html(jason.body);
+            id.html(jason.id);
+            userId.html(jason.userId);
+            if(jason.userId==-1)getUser(jason.userId, userName);
+            else userName.html('securde demo xd');
+
+            newPost.append(title);
+            newPost.append(userName);
+            newPost.append(body);
+            newPost.append(id);
+            newPost.append(userId);
+
+            $("#bigDiv").append(newPost);
+        }
+        
+        $("#morePosts").click(function(){
+            $.get(path,function(obj){
+                addPosts(obj, 10);
+            });
+        });
+        $("#find").click(function(){
+            title = $("#searchTitle");
+            body = $("#searchbody");
+            console.log(title.val() + " " +  body.val());
+            obj = {title:title.val(),
+                   body:body.val(), 
+                   id:0,
+                   userId:-1,
+                   name:'dsd'};
+            title.html("");
+            body.html("");
+            posts.unshift(obj);
+            refresh();
+            $("#bigDiv").scrollTop(0,0);
+        });
+        
+    });
+        
+    $(document).on('click', ".userName", function() {
+        var obj = $(this).parent().find(".userId").text();
+        //window.open("profile.html?userId=" + obj);
+    });
+        
+    </script>
+    </head>
+    
+    <body
+        </div>
+        <div class = "row mainDiv">
+            <!--pls d0nt judge code xd hard c0ded lahat cos we pr0-->
+            <div class = "col-md-3">
+                <div class = "post" style = "margin:5px;height:35%;margin-left:10px;">
+                    <h3 style = "padding-left:5px;">Add Post:</h3>
+                    <input type = "text" placeholder = "Title" class = 'search' id = "searchTitle">
+                    <input type = "text" placeholder = "Body" class = 'search' id = "searchbody">
+                    <button id = 'find' class = 'buttons'>Add</button>
+                </div>
+            </div>
+            
+            <div id = "bigDiv" class = "col-md-9 ">
+            </div>
+        </div>
+        
+        
+    </body>
+    
+    
+    
+</html>
