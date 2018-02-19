@@ -216,7 +216,7 @@
             body.html(jason.body);
             id.html(jason.id);
             userId.html(jason.userId);
-            if(jason.userId==-1)getUser(jason.userId, userName);
+            if(jason.userId!=-1)getUser(jason.userId, userName);
             else userName.html('securde demo xd');
 
             newPost.append(title);
