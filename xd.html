@@ -206,13 +206,13 @@
 
             var userName = $("<div>");
             userName.addClass("userName");
-            
-            title.html(jason.title);
-            body.html(jason.body);
-            id.html(jason.id);
-            userId.html(jason.userId);
+
+            title.text(jason.title);
+            body.text(jason.body);
+            id.text(jason.id);
+            userId.text(jason.userId);
             if(jason.userId!=-1)getUser(jason.userId, userName);
-            else userName.html('securde demo xd');
+            else userName.text('securde demo xd');
             
             newPost.append(title);
             newPost.append(userName);
